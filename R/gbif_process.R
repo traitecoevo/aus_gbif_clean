@@ -78,7 +78,7 @@ i2 %>%
              datasetkey,
              .keep_all = TRUE) -> aus_filt
 
-
+dir.create("processed_data", showWarnings = TRUE)
 ggplot(aus_filt,
        aes(x = decimallongitude, y = decimallatitude, col = genus)) + geom_point()
 write_csv(aus_filt, "processed_data/filtered_aus_obs.csv")
