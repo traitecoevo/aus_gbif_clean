@@ -9,7 +9,7 @@ library(CoordinateCleaner)
 # note that 90% of the code below is also possible with the point and click menu on the gbif website
 #
 
-dir.create("raw_data/gbif", showWarnings = TRUE)
+dir.create("raw_data/gbif", showWarnings = TRUE, recursive = TRUE)
 curl_download(
     "https://api.gbif.org/v1/occurrence/download/request/0001832-210819072339941.zip",
     "raw_data/gbif/gbif.zip",
@@ -83,7 +83,8 @@ i2 %>%
 
 dir.create("processed_data", showWarnings = TRUE)
 ggplot(aus_filt,
-       aes(x = decimallongitude, y = decimallatitude, col = genus)) + geom_point() + coord_fixed()
+       aes(x = decimallongitude, y = decimallatitude, col = genus)) + geom_point() + coord_fixed() + 
+    theme(legend.position = "none")
 write_csv(aus_filt, "processed_data/filtered_aus_obs.csv")
 
 select(
