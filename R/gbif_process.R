@@ -56,13 +56,16 @@ data.frame(aus_gbif) %>%
     filter(!decimallatitude == 0 |
                !decimallongitude == 0) -> intermediate_check
 
-#adding some additional filters on the issue column; could add more here, if needed
+# adding some additional filters on the issue column; could add more here, if needed
 intermediate_check %>%
     filter(
         !grepl("COUNTRY_COORDINATE_MISMATCH", intermediate_check$issue) &
             !grepl("RECORDED_DATE_UNLIKELY", intermediate_check$issue)
     ) -> i2
 
+#
+# using the coordinate_cleaner functions, these may take a while with large datasets
+#
 i2 %>%
     cc_sea(ref = buffland) %>% # remove from ocean # doesn't work?
     cc_val() %>%
@@ -71,7 +74,7 @@ i2 %>%
     cc_cen(buffer = 2000) %>% # remove country centroids within 2km
     cc_cap(buffer = 2000) %>% # remove capitals centroids within 2km
     cc_inst(buffer = 2000) %>% # remove zoo and herbaria within 2km
-    #cc_coun() %>% #country mismatch with coords # presently not working
+    # cc_coun() %>% #country mismatch with coords # presently not working
     distinct(decimallongitude,
              decimallatitude,
              specieskey,
