@@ -82,6 +82,7 @@ i2 %>%
              .keep_all = TRUE) -> aus_filt
 
 dir.create("processed_data", showWarnings = TRUE)
+
 ggplot(aus_filt,
        aes(x = decimallongitude, y = decimallatitude, col = genus)) + geom_point() + coord_fixed() + 
     theme(legend.position = "none")
